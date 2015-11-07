@@ -1,0 +1,487 @@
+Fly Class
+****************************************************************************************************************************
+package applicationLayer;
+
+   /**@author Kanyoza Mtonga
+	* @Version Assignment 1.0 Stage 2
+	*/
+
+   /** Package name is assigned
+	*  Imported packages 
+	*  util.Random package enables random movements
+	*  Package enables loose coupling
+	*/
+
+import java.util.Random;
+import javax.swing.*;
+
+	/**Fly class implements the runnable method 
+	 * for threads to be used
+	 * Attributes are declared
+	 */
+public class Fly implements Runnable {
+
+	private JLabel flyLabel;
+	private Random rnd = new Random();
+	boolean flyStop=true;
+	private Thread thread;
+	int x;
+	int y;
+	private ImageIcon image;
+	
+	/**A constructor to initialise the attributes
+	 */
+		public JLabel flyImage(){
+			
+		   /** New image Icon image is created with the image path
+		 	*  A new JLabel flyLabel and the image is set to this label
+		 	*  JLabel locations are set
+		 	*  ImageIcon constructor is passed the image URL to locate the image
+		 	*/
+			setImage(new ImageIcon("C:\\OOP\\Assignment 1 Stage 1\\img\\fly.JPEG"));
+			flyLabel=new JLabel();
+			flyLabel.setIcon(getImage());
+			flyLabel.setLocation(x, y);
+			
+			return flyLabel;
+		}
+			/** A stopThread method 
+			 * A thread is created to stop the fly thread
+			 * If fly is false then return else if its true
+			 * Throw an exception and stop the thread using join
+			 */
+		public void stopThread()
+		{
+			flyStop=false;
+			if(!flyStop)
+				return;
+			else{
+			flyStop = true;
+			try{
+			thread.join();
+			}catch(InterruptedException e){
+				e.printStackTrace();
+			}
+		}
+		
+		}
+		 /** A run method to run a thread for the random movements
+	 	  *  While flyStop is true set the coordinates for the flyLabel
+	 	  *  Throw a try catch exception and let the thread sleep
+	 	  */
+	public void run() {
+		while(flyStop){
+			int x = rnd.nextInt(600)+10;
+			int y = rnd.nextInt(400)+10;
+			
+			try{Thread.sleep(1000);}
+			catch(InterruptedException e){}
+			if(x<10){
+				x=10;
+				}
+				else{
+					//Set the label bounds for x coordinates
+					flyLabel.setBounds(x, y, 100, 100);
+				
+				}
+				if(x > 450){
+					x=450;
+				}
+				if(y<10){
+					y=10;
+				}
+				else {
+					//Set the label bounds for y coordinates
+					flyLabel.setBounds(x, y, 100, 100);
+					}
+			if (y > 550){
+				y=550;
+			}
+		}
+		// fly stop thread is true set fly label visibility to true
+		while (flyStop = true){
+			flyLabel.setVisible(false);
+	}
+
+}
+		public ImageIcon getImage() {
+			return image;
+		}
+		public void setImage(ImageIcon image) {
+			this.image = image;
+		}
+}
+****************************************************************************************************************************
+Frog Class
+package applicationLayer;
+   /**@author Kanyoza Mtonga
+	* @Version Assignment 1.0 Stage 2
+	*/
+
+	/** Package name is assigned
+	*  Imported packages 
+	*  util.Random package enables random movements
+	*  Package enables loose coupling
+	*/
+
+import java.util.Random;
+import javax.swing.*;
+
+	/**Frog class implements the runnable method 
+	 * for threads to be used
+	 * Attributes are declared
+	 */
+public class Frog implements Runnable {
+
+	private JLabel frogLabel;
+	private Random rnd = new Random();
+	boolean frogStop=true;
+	private Thread thread;
+	int x;
+	int y;
+	ImageIcon image;
+	
+		public JLabel frogImage(){
+		   /** New image Icon image is created with the image path
+		 	*  A new JLabel frogLabel and the image is set to this label
+		 	*  JLabel locations are set
+		 	*   ImageIcon constructor is passed the image URL to locate the image
+		 	*/
+			image=new ImageIcon("C:\\OOP\\Assignment 1 Stage 1\\img\\frog.JPEG");
+			frogLabel=new JLabel();
+			frogLabel.setIcon(image);
+			frogLabel.setLocation(x, y);
+			
+			return frogLabel;
+		}
+		
+		/** A stopThread method 
+		 * A thread is created to stop the fly thread
+		 * If frog is false then return else if its true
+		 * Throw an exception and stop the thread using join
+		 */
+		public void stopThread()
+		{
+			frogStop=false;
+			if(!frogStop)
+				return;
+			else{
+			frogStop = true;
+			try{
+			thread.join();
+			}catch(InterruptedException e){
+				e.printStackTrace();
+			 }
+			while (frogStop = true){
+				frogLabel.setVisible(false);
+		   }
+			}
+		}
+		
+		 /** A run method to run a thread for the random movements
+	 	  *  While frogStop is true set the coordinates for the frogLabel
+	 	  *  Throw a try catch exception and let the thread sleep
+	 	  */
+	public void run() {
+		while(frogStop){
+			int x = rnd.nextInt(600)+ 10;
+			int y = rnd.nextInt(400)+ 10;
+			
+			try{Thread.sleep(1000);}
+			catch(InterruptedException e){}
+			if(x<10){
+				x=10;
+			}
+				else{
+					//Set the label bounds for x coordinates
+					frogLabel.setBounds(x, y, 150, 150);
+			
+			}
+				if(x > 450){
+					x=450;
+				}
+				else {
+					//Set the label bounds for y coordinates
+					frogLabel.setBounds(x, y, 150, 150);
+					}
+			if (y > 550){
+				y=550;
+			}
+		
+		// Frog stop thread is true set frog label visibility to true	
+//			while (frogStop = true){
+//				frogLabel.setVisible(false);
+			}
+		}
+	}
+****************************************************************************************************************************
+	CyberPet Class
+	package presentationLayer;
+/**@author Kanyoza Mtonga
+ * @Version Assignment 1.0 Stage 1
+
+   /** Imported packages
+ 	*/
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Random;
+import javax.swing.*;
+import applicationLayer.Fly;
+import applicationLayer.Frog;
+import applicationLayer.Cat;
+import applicationLayer.Mouse;
+
+import java.awt.event.*;
+
+	/** Cyberpet Class uses the JFrame method and implements actionListener for the events
+	 */
+public class cyberpet extends JFrame implements ActionListener{
+	/**Attributes are declared here
+     *  Panels are declared
+     *  Buttons are declared
+     *  Label and Text Area are declared
+     *  Two objects are created Frog and Fly
+     *  Image Icon method is declared
+     *  A JCombBox to hold my pet pairs
+     */
+	private JPanel displayPanel, buttonPanel;
+	private JButton makePetButton,eatPetButton, resetAllButton;
+    private JLabel displayPet;
+    private Random rnd = new Random();
+	Frog frog;
+	Fly fly;
+	Cat cat;
+	Mouse mouse;
+    private JTextArea petStatusArea, petState;
+    private JTextField enterName;
+    ImageIcon image;
+    int x;
+    int y;
+    private JComboBox<String> pets;
+    
+    /** Arraylist of pets is created
+     * 
+     */
+  ArrayList<Frog> frogs;
+	ArrayList<Fly> flies;
+	ArrayList<Mouse> mice;
+	ArrayList<Cat> cats;
+    
+    
+    /**Main method
+	 * Creating a new frame 
+	 * Setting the background colour and size
+	 */
+    public static void main(String[] args){
+    	cyberpet frame = new cyberpet();
+        frame.setSize(900, 700);
+        frame.createGUI();
+        frame.show();
+        frame.getContentPane().setBackground(Color.green);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE );
+       }
+    
+     /** A container window is created to hold our components
+      * This is our graphical user Interface (GUI)
+      */
+     public void createGUI() {
+    	setDefaultCloseOperation(EXIT_ON_CLOSE);
+    	Container window = getContentPane();
+        window.setLayout(new FlowLayout()); // Window layout is set to flow layout
+        
+        // A new display panel is created and added to the window
+        displayPanel = new JPanel();
+        displayPanel.setPreferredSize(new Dimension(750, 550));
+        displayPanel.setBackground(Color.white);
+        window.add(displayPanel);
+        
+        // A new button panel is created to hold the buttons
+        buttonPanel = new JPanel();
+        buttonPanel.setPreferredSize(new Dimension(500, 70));
+        buttonPanel.setLocation(200, 100);
+        buttonPanel.setBackground(Color.white);
+        window.add(buttonPanel);
+        
+        // Display pet label is created
+        displayPet = new JLabel("Enter Pet Name!");
+        buttonPanel.add(displayPet, BorderLayout.SOUTH);
+    
+        //Enter name text field for the user to enter the pet name
+        enterName = new JTextField("");
+        enterName.setPreferredSize(new Dimension(100, 30));
+        enterName.setLocation(200, 60);
+        enterName.addActionListener(this);
+        buttonPanel.add(enterName);
+        
+        /**Buttons are created and added to the button panel
+         */
+        makePetButton = new JButton("Make Pet");
+        buttonPanel.add(makePetButton);
+        
+        eatPetButton = new JButton("Hungry");
+        buttonPanel.add(eatPetButton);
+        
+        resetAllButton = new JButton("Reset");
+        buttonPanel.add(resetAllButton);
+        
+        // A text area to display the pet status
+        petStatusArea = new JTextArea("Pet Status");
+        buttonPanel.add(petStatusArea, BorderLayout.SOUTH);
+        petState = new JTextArea ("");
+        buttonPanel.add(petState);
+        
+        /** Action Listeners are added to the buttons
+         * The capture any event that the buttons make
+         */
+        makePetButton.addActionListener(this);
+        eatPetButton.addActionListener(this);
+        resetAllButton.addActionListener(this);
+        
+        /**Pet pairs are added to the JComboBox
+         * Only Cats and Frogs
+         */
+        pets = new JComboBox<String>();
+        pets.addItem("");
+        pets.addItem("Cat");
+        pets.addItem("Frog");
+        buttonPanel.add(pets);
+        
+        frogs = new ArrayList<Frog>();
+        flies = new ArrayList<Fly>();
+        cats = new ArrayList<Cat>();
+        mice = new ArrayList<Mouse>();
+        
+	
+    }
+     	/** Action events performed
+ 	     */
+     	public void actionPerformed(ActionEvent event) {
+     		/**when the make pet button is clicked do the following actions
+        	 */
+            	if (event.getSource()==makePetButton)
+                {
+            	//Gets the name entered
+                if (enterName.getText().equals(""))
+                {
+                /**Checks if name is entered if not display the text in the brackets
+                 *Sets the colour to red
+                 */
+                petStatusArea.setText("Please give your pet a name");
+                petStatusArea.setForeground(Color.red);
+                }else
+                {
+                	/** If the pet name is present set the name in the text area
+                	 * Create a new frog and fly object
+                	 * Image is added to the frog image label and added to the display panel
+                	 * A new thread is created and the object is passed to it
+                	 * Thread is started
+                	 */
+            			petStatusArea.setText(enterName.getText());
+            			Frog frog = new Frog();
+            			frogs.add(frog);
+            			
+            			JLabel img=frog.frogImage();
+            			displayPanel.add(img);
+            			Thread t = new Thread(frog);
+            			t.start();
+            			
+            			Fly fly = new Fly();
+            			flies.add(fly);
+            			JLabel img1 = fly.flyImage();
+            			displayPanel.add(img1);
+            			Thread t1 = new Thread(fly);
+            			t1.start();
+            			
+                    
+                }
+                /**Getting the pet pairs from the JComboBox
+                 * Cats and mice should only appear when the Selection is clicked on the comboBox
+                 * 
+                 */
+                if(event.getSource()==pets)
+                    {
+                	petStatusArea.setText(enterName.getText());
+                	petState.setText(("Is Hungry"));
+        			Frog frog = new Frog();
+        			frogs.add(frog);
+        			
+        			JLabel img=frog.frogImage();
+        			displayPanel.add(img);
+        			Thread t = new Thread(frog);
+        			t.start();
+        			
+        			Fly fly = new Fly();
+        			flies.add(fly);
+        			JLabel img1 = fly.flyImage();
+        			displayPanel.add(img1);
+        			Thread t1 = new Thread(fly);
+        			t1.start();
+        			
+        			Cat cat = new Cat();
+        			cats.add(cat);
+        			
+        			JLabel img3=cat.catImage();
+        			displayPanel.add(img3);
+        			Thread t3 = new Thread(cat);
+        			t3.start();
+        			
+        			Mouse mouse = new Mouse();
+        			mice.add(mouse);
+        			JLabel img4 = mouse.mouseImage();
+        			displayPanel.add(img4);
+        			Thread t4 = new Thread(fly);
+        			t4.start();
+                
+                }
+                }
+            		   /** If the hungry button is clicked
+                        * Check the pet Status
+                        * Follow the fly and eat the fly
+                        */
+            			if (event.getSource()==eatPetButton){
+            				
+            				petStatusArea.setText(enterName.getText());
+            				enterName.getText().equals("Is Hungry");
+            				petState.setText("Is Hungry");
+            				int x = rnd.nextInt(300)+10;
+        					int y = rnd.nextInt(300)+10;
+        					System.out.println("eat!..." + x + ";" + y);
+        					if(x<10)
+        						x=10;
+        					if(x > 450)
+        						x=450;
+        					if(y<10)
+        						y=10;
+        					if (y > 450)
+        						y=450;
+        					
+        				    flies.get(0).getImage().setImage(null);
+        				  
+        				    petStatusArea.setText(enterName.getText());
+            				enterName.getText().equals("Is Hungry");
+            				petState.setText("Is Not Hungry");
+        				    
+            			}
+            		
+            			if (event.getSource()==resetAllButton){
+            				/**Repaints the JdisplayPanel Clearing all objects on the screen
+            				 * And removes everything from the displayPanel
+            				 * The text field and text area are cleared
+            				 */
+            				Graphics g = displayPanel.getGraphics(); 
+            				g.clearRect (0, 0, 750, 550);
+            				displayPanel.removeAll();
+            				petStatusArea.setText("");
+            				enterName.setText("");
+            				frog.stopThread();
+            				fly.stopThread();
+            				mouse.stopThread();
+            				cat.stopThread();
+            	
+            			}
+            	}
+      
+            }
+
+****************************************************************************************************************************
+
